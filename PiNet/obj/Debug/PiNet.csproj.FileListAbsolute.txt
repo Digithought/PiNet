@@ -1,0 +1,5 @@
+D:\Weedebud\trunk\Source\PiNet\BlackNet\bin\Debug\Digithought.PiNet.dll
+D:\Weedebud\trunk\Source\PiNet\BlackNet\bin\Debug\Digithought.PiNet.pdb
+D:\Weedebud\trunk\Source\PiNet\BlackNet\obj\Debug\PiNet.csprojResolveAssemblyReference.cache
+D:\Weedebud\trunk\Source\PiNet\BlackNet\obj\Debug\Digithought.PiNet.dll
+D:\Weedebud\trunk\Source\PiNet\BlackNet\obj\Debug\Digithought.PiNet.pdb
