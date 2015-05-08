@@ -1,7 +1,7 @@
-BlackNet - .NET (C#) wrapper for the BeagleBone Black
+PiNet - .NET (C#) wrapper for the Raspberry Pi
 ========
 
-Provides .NET access to the BBB's IOs through the BBB's Linux file drivers.  Configures the device tree (optionally) as necessary.
+Provides .NET access to the RPi's IOs through the RPi's Linux file drivers.  Configures the device tree (optionally) as necessary.
 
 The following IOs are current complete:
 
@@ -12,12 +12,12 @@ If you're using the other IOs, please contribute to this library.
 
 The following projects are included:
 
-* BlackNet.csproj - This contains the IO device wrappers
-* BlackNet.Test - Unit tests - should run on any hardware (PC)
-* BlackNet.InteractiveTests - To be run on the BBB to allows command-line experimentation with the ports
+* PiNet.csproj - This contains the IO device wrappers
+* PiNet.Test - Unit tests - should run on any hardware (PC)
+* PiNet.InteractiveTests - To be run on the RPi to allows command-line experimentation with the ports
 * ConsoleUi - Simple menuing system used by the InteractiveTests project
 
-Setting up Mono on the BeagleBone Black
+Setting up Mono on the Raspberry Pi
 ---------------------------------------
 
 Unfortunately, as of this writing (Dec 22, 2014), there isn't a mono package for Weezy on ARMhf, otherwise installing mono would be as easy as this command (on Debian):
@@ -25,12 +25,12 @@ Unfortunately, as of this writing (Dec 22, 2014), there isn't a mono package for
     # DOESN'T WORK - there is not a package available yet.  But see below...
     sudo apt-get install mono-complete
   
-You could pull down the source and let the BBB churn on compiling that for about a day, but fortunately, "pingfu" 
+You could pull down the source and let the RPi churn on compiling that for about a day, but fortunately, "pingfu" 
 has kindly provided a [.deb package for us](http://pingfu.net/programming/troubleshooting/hardware/2014/10/23/mono-debian-package-armhf-beaglebone-black.html).  
 
-Make sure that you setup networking on your BBB first:
+Make sure that you setup networking on your RPi first:
 * Setup your network interface to share with the USB adapter.
-* Setup your BBB to use the USB host as the gateway:
+* Setup your RPi to use the USB host as the gateway:
 
   	    /sbin/route add default gw 192.168.7.1
 
@@ -42,13 +42,13 @@ Now download [this package](https://s3-eu-west-1.amazonaws.com/westgatecyber/mon
 
     sudo dpkg -i mono*.deb
   
-You can download the above file using commands, or download the file on your host computer and SCP it (I use WinSCP) to your BBB.
+You can download the above file using commands, or download the file on your host computer and SCP it (I use WinSCP) to your RPi.
 
 Compiling And Running
 ---------------------
 
-There are various options for compiling and running on Mono on the BBB.  
-* If you are using HDMI or VNC you can install MonoDevelop on the BeagleBone Black and use it as per normal.  
+There are various options for compiling and running on Mono on the RPi.  
+* If you are using HDMI or VNC you can install MonoDevelop on the Raspberry Pi and use it as per normal.  
 * Supposedly Monodevelop (Xamarin) has remote debugging capabilities, but I've yet to get it to work. Instructions are [here](http://www.ofitselfso.com/Beagle/RemoteMonoDebuggingOnTheBeagleBoneBlack.php).
 * What I've been trying to get working is remote debugging from Visual Studio.  The Mono soft debugger appears to be rather mature, as it's used by Unity 
 and Xamarin, and I think even when debugging locally by the MonoDevelop environment, but integration with
@@ -65,10 +65,10 @@ Please let us know if you find a better debugging option.
 Dependencies
 ------------
 
-BlackNet depends on:
+PiNet depends on:
 * JSON.Net - only for one small bit of logging code which could easily be changed.
 
-BlackNet.Test depends on:
+PiNet.Test depends on:
 * Moq
 * NUnit - added packages include VS testing integration so you don't have to install NUnit.
 
@@ -90,6 +90,6 @@ Interacting with a Pulse Width Modulation device:
 Interacting with a GPIO:    
 
         var device = new Gpio(P8_12);
-        device.Direction = BbbDirection.Out;
+        device.Direction = RPiDirection.Out;
         device.IsHigh = true;
 

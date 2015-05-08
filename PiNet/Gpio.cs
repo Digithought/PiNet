@@ -9,72 +9,64 @@ namespace Digithought.PiNet
 {
 	public class Gpio : PortBase
 	{
-		private static readonly Dictionary<BbbPort, int> GpioTestMappings =
-			new Dictionary<BbbPort, int>
+        private static readonly Dictionary<RPiPort, int> GpioMappings =
+            new Dictionary<RPiPort, int>
 			{
-				{ BbbPort.P9_11, 30 }, { BbbPort.P9_12, 60 }, { BbbPort.P9_13, 31 }, { BbbPort.P9_14, 50 }, { BbbPort.P9_15, 48 }, { BbbPort.P9_16, 51 },
-				{ BbbPort.P9_21, 3 }, { BbbPort.P9_22, 2 }, { BbbPort.P9_23, 49 }, { BbbPort.P9_24, 15 }, { BbbPort.P9_25, 117 }, { BbbPort.P9_26, 14 },
-				{ BbbPort.P9_27, 115 }, { BbbPort.P9_28, 113 }, { BbbPort.P9_29, 111 }, { BbbPort.P9_30, 112 }, { BbbPort.P9_31, 110 }, { BbbPort.P9_41, 20 },
-				{ BbbPort.P9_42, 7 },
-
-				{ BbbPort.P8_3, 38 }, { BbbPort.P8_4, 39 }, { BbbPort.P8_5, 34 }, { BbbPort.P8_6, 35 }, { BbbPort.P8_7, 66 }, { BbbPort.P8_8, 67 },
-				{ BbbPort.P8_9, 69 }, { BbbPort.P8_10, 68 }, { BbbPort.P8_11, 45 }, { BbbPort.P8_12, 44 }, { BbbPort.P8_13, 23 }, { BbbPort.P8_14, 26 },
-				{ BbbPort.P8_15, 47 }, { BbbPort.P8_16, 46 }, { BbbPort.P8_17, 27 }, { BbbPort.P8_18, 65 }, { BbbPort.P8_19, 22 }, { BbbPort.P8_20, 63 },
-				{ BbbPort.P8_21, 62 }, { BbbPort.P8_22, 37 }, { BbbPort.P8_23, 36 }, { BbbPort.P8_24, 33 }, { BbbPort.P8_25, 32 }, { BbbPort.P8_26, 61 },
-				{ BbbPort.P8_27, 86 }, { BbbPort.P8_28, 88 }, { BbbPort.P8_29, 87 }, { BbbPort.P8_30, 89 }, { BbbPort.P8_31, 10 }, { BbbPort.P8_32, 11 },
-				{ BbbPort.P8_33, 9 }, { BbbPort.P8_34, 81 }, { BbbPort.P8_35, 8 }, { BbbPort.P8_36, 81 }, { BbbPort.P8_37, 78 }, { BbbPort.P8_38, 79 },
-				{ BbbPort.P8_39, 76 }, { BbbPort.P8_40, 77 }, { BbbPort.P8_41, 74 }, { BbbPort.P8_42, 75 }, { BbbPort.P8_43, 72 }, { BbbPort.P8_44, 73 },
-				{ BbbPort.P8_45, 70 }, { BbbPort.P8_46, 71 },
+				{ RPiPort.P1_3, 2 }, { RPiPort.P1_5, 3 }, { RPiPort.P1_7, 4 }, { RPiPort.P1_8, 14 }, { RPiPort.P1_10, 15 },
+                { RPiPort.P1_11, 17 }, { RPiPort.P1_12, 18 }, { RPiPort.P1_13, 27 }, { RPiPort.P1_15, 22 }, { RPiPort.P1_16, 23 },
+                { RPiPort.P1_18, 24 }, { RPiPort.P1_19, 10 }, { RPiPort.P1_21, 9 }, { RPiPort.P1_22, 25 }, { RPiPort.P1_23, 11 },
+                { RPiPort.P1_24, 8 }, { RPiPort.P1_26, 7 }, { RPiPort.P1_29, 5 }, { RPiPort.P1_31, 6 }, { RPiPort.P1_32, 12 },
+                { RPiPort.P1_33, 13 }, { RPiPort.P1_35, 19 }, { RPiPort.P1_36, 16 }, { RPiPort.P1_37, 26 }, { RPiPort.P1_38, 20 },
+                { RPiPort.P1_40, 21 },
 			};
 
 		private const string GpioPath = "/sys/class/gpio/";
-		private const string GpioPrefix = "gpio";
-
+        private const string GpioPrefix = "gpio";
 		private bool _checkSafety;
 
 		/// <summary> Wraps a digital I/O port. </summary>
 		/// <param name="autoConfigure"> Whether to automatically configure the port.  Set to true unless you're certain the port is already configured. </param>
 		/// <param name="checkSafety"> When true, extra checks are performed to be sure the port is in ready state before writing. </param>
-		public Gpio(BbbPort port, bool autoConfigure = true, bool checkSafety = true) : base(port, autoConfigure)
+		public Gpio(RPiPort port, bool autoConfigure = true, bool checkSafety = true) : base(port, autoConfigure)
 		{
 			_checkSafety = checkSafety;
 		}
 
 		public override void Configure()
 		{
-			if (!Directory.Exists(GetGioDevicePath()))
-				WriteToFile(GpioPath + "export", GpioTestMappings[Port].ToString());
+			if (!Directory.Exists(GetGpioDevicePath()))
+                WriteToFile(GpioPath + "export", GpioMappings[Port].ToString());
 		}
 
 		public override void Unconfigure()
 		{
-			if (Directory.Exists(GetGioDevicePath()))
-				WriteToFile(GpioPath + "unexport", GpioTestMappings[Port].ToString());
+			if (Directory.Exists(GetGpioDevicePath()))
+                WriteToFile(GpioPath + "unexport", GpioMappings[Port].ToString());
 		}
 
-		public BbbDirection? Direction
+		public RPiDirection? Direction
 		{
 			get
 			{
 				var value = ReadFromFile(DirectionFileName()).Trim();
-				return value == "in" ? BbbDirection.In 
-					: value == "out" ? BbbDirection.Out 
-					: (BbbDirection?)null;
+				return value == "in" ? RPiDirection.In 
+					: value == "out" ? RPiDirection.Out 
+					: (RPiDirection?)null;
 			}
 			set
 			{
-				WriteToFile(DirectionFileName(), value.Value == BbbDirection.In ? "in" : "out");
+				WriteToFile(DirectionFileName(), value.Value == RPiDirection.In ? "in" : "out");
 			}
 		}
 
 		private string DirectionFileName()
 		{
-			return Path.Combine(GetGioDevicePath(), "direction");
+			return Path.Combine(GetGpioDevicePath(), "direction");
 		}
 
-		private string GetGioDevicePath()
+		private string GetGpioDevicePath()
 		{
-			return Path.Combine(GpioPath, GpioPrefix + GpioTestMappings[Port]);
+            return Path.Combine(GpioPath, GpioPrefix + GpioMappings[Port]);
 		}
 
 		public bool IsReady
@@ -103,7 +95,7 @@ namespace Digithought.PiNet
 
 		private string ValueFileName()
 		{
-			return Path.Combine(GetGioDevicePath(), "value");
+			return Path.Combine(GetGpioDevicePath(), "value");
 		}
 
 		public bool IsHigh

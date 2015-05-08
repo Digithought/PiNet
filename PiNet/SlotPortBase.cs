@@ -9,7 +9,7 @@ namespace Digithought.PiNet
 {
 	public abstract class SlotPortBase : PortBase
 	{
-		public SlotPortBase(BbbPort port, bool autoConfigure = true) : base(port, autoConfigure) { }
+		public SlotPortBase(RPiPort port, bool autoConfigure = true) : base(port, autoConfigure) { }
 
 		private string _slotsPath;
 

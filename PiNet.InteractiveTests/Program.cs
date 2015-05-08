@@ -24,7 +24,7 @@ namespace Digithought.PiNet.InteractiveTests
 		private static void GpioTests()
 		{
 			Console.Write("port: ");
-			var port = (BbbPort)Enum.Parse(typeof(BbbPort), Console.ReadLine());
+			var port = (RPiPort)Enum.Parse(typeof(RPiPort), Console.ReadLine());
 
 			Console.Write("\r\nautoConfigure: ");
 			var autoConfigure = JsonConvert.DeserializeObject<bool>(Console.ReadLine());
@@ -39,7 +39,7 @@ namespace Digithought.PiNet.InteractiveTests
 		private static void PwmTests()
 		{
 			Console.Write("port: ");
-			var port = (BbbPort)Enum.Parse(typeof(BbbPort), Console.ReadLine());
+			var port = (RPiPort)Enum.Parse(typeof(RPiPort), Console.ReadLine());
 			
 			Console.Write("\r\nautoConfigure: ");
 			var autoConfigure = JsonConvert.DeserializeObject<bool>(Console.ReadLine());

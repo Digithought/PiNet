@@ -39,8 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BbbDirection.cs" />
-    <Compile Include="BbbPort.cs" />
+    <Compile Include="RPiDirection.cs" />
+    <Compile Include="RPiPort.cs" />
     <Compile Include="PiNetException.cs" />
     <Compile Include="PiNetLoggingCategory.cs" />
     <Compile Include="Gpio.cs" />

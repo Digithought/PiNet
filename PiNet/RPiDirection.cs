@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Digithought.PiNet
 {
-	public enum BbbDirection
+	public enum RPiDirection
 	{
 		In,
 		Out

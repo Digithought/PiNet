@@ -9,9 +9,9 @@ namespace Digithought.PiNet
 {
 	public abstract class PortBase
 	{
-		public BbbPort Port { get; private set; }
+		public RPiPort Port { get; private set; }
 
-		public PortBase(BbbPort port, bool autoConfigure = true)
+		public PortBase(RPiPort port, bool autoConfigure = true)
 		{
 			Port = port;
 

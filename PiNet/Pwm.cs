@@ -9,16 +9,16 @@ namespace Digithought.PiNet
 {
 	public class Pwm : SlotPortBase
 	{
-		private static readonly Dictionary<BbbPort, string> PwmTestMappings = 
-			new Dictionary<BbbPort, string>
+		private static readonly Dictionary<RPiPort, string> PwmTestMappings = 
+			new Dictionary<RPiPort, string>
 			{
-				{ BbbPort.P8_13, "pwm_test_P8_13.*" },
-				{ BbbPort.P8_19, "pwm_test_P8_19.*" },
-				{ BbbPort.P9_14, "pwm_test_P9_14.*" },
-				{ BbbPort.P9_16, "pwm_test_P9_15.*" },
-				{ BbbPort.P9_21, "pwm_test_P9_21.*" },
-				{ BbbPort.P9_22, "pwm_test_P9_22.*" },
-				{ BbbPort.P9_42, "pwm_test_P9_42.*" },
+				{ RPiPort.P8_13, "pwm_test_P8_13.*" },
+				{ RPiPort.P8_19, "pwm_test_P8_19.*" },
+				{ RPiPort.P9_14, "pwm_test_P9_14.*" },
+				{ RPiPort.P9_16, "pwm_test_P9_15.*" },
+				{ RPiPort.P9_21, "pwm_test_P9_21.*" },
+				{ RPiPort.P9_22, "pwm_test_P9_22.*" },
+				{ RPiPort.P9_42, "pwm_test_P9_42.*" },
 			};
 		private const string PwmSlotName = "am33xx_pwm";
 		private const string PwmPrefix = "bone_pwm_";
@@ -30,7 +30,7 @@ namespace Digithought.PiNet
 		/// <summary> Constructs a Pulse Width Modulation (PWM) GPIO port wrapper. </summary>
 		/// <param name="port"> Must be an available port supporting PWM. </param>
 		/// <param name="autoConfigure"> Configure the device tree.  Should be true unless you are certain that it is already configured or you are constructing the instance to unconfgure it. </param>
-		public Pwm(BbbPort port, bool autoConfigure = true) : base(port, autoConfigure) { }
+		public Pwm(RPiPort port, bool autoConfigure = true) : base(port, autoConfigure) { }
 
 		private string DevicePath
 		{
@@ -42,7 +42,7 @@ namespace Digithought.PiNet
 			}
 		}
 
-		protected static string GetDevicePath(BbbPort port, IDictionary<BbbPort, string> mappings)
+		protected static string GetDevicePath(RPiPort port, IDictionary<RPiPort, string> mappings)
 		{
 			string result;
 			var ocpPath = Directory.EnumerateDirectories("/sys/devices/", "ocp.*").FirstOrDefault()
